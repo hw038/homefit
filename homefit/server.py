@@ -515,11 +515,13 @@ def make_handler(app):
             return None
 
         def _ip(self):
+            # CloudFront 가 직접 채우는 헤더만 믿는다(원본 요청 정책 AllViewerAndCloudFrontHeaders 가 항상 전달).
             cv = self.headers.get("CloudFront-Viewer-Address")           # "IP:포트" (IPv6 도 마지막 : 뒤가 포트)
             if cv:
                 return cv.rsplit(":", 1)[0].strip("[] ")
+            # 없으면 X-Forwarded-For 의 맨 오른쪽(CloudFront 가 덧붙인 값)만 쓴다. 맨 왼쪽은 접속자가 위조할 수 있다.
             xf = self.headers.get("X-Forwarded-For")
-            return xf.split(",")[0].strip() if xf else self.client_address[0]
+            return xf.split(",")[-1].strip() if xf else self.client_address[0]
 
         def _guard(self, kind):
             pub = self._public()

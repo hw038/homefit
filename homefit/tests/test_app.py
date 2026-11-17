@@ -262,6 +262,18 @@ class PublicMode(unittest.TestCase):
     def test_rate_limit(self):
         codes = [pub_call("POST", "/api/apt/view", {"apt_id": "0000000000", "voter": "z" * 20})[0] for _ in range(S.LIMITS["view"] + 3)]
         self.assertIn(429, codes)
+    def test_rate_limit_not_bypassed_by_spoofed_xff(self):
+        H = S.make_handler(APP)
+        def hit(xff):
+            req = (f"POST /api/apt/view HTTP/1.1\r\nHost: x\r\nX-HF-Origin: {APP.secret}\r\nX-Forwarded-For: {xff}, 198.51.100.7\r\n"
+                   f"Content-Length: 2\r\n\r\n{{}}").encode()
+            out = io.BytesIO()
+            class Srv: pass
+            h = H.__new__(H); h.rfile = io.BytesIO(req); h.wfile = out; h.client_address = ("10.0.0.6", 0); h.server = Srv()
+            h.handle_one_request()
+            return int(out.getvalue().split()[1])
+        codes = [hit(f"1.2.3.{i}") for i in range(S.LIMITS["view"] + 3)]   # 왼쪽 값을 매번 바꿔도
+        self.assertIn(429, codes)
 
 if __name__ == "__main__":
     unittest.main(verbosity=1)
