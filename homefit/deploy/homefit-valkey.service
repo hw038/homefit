@@ -1,0 +1,12 @@
+[Unit]
+Description=Valkey for HomeFit likes (localhost only)
+After=network.target
+
+[Service]
+User=ec2-user
+ExecStart=/usr/bin/valkey-server --bind 127.0.0.1 --port 6379 --protected-mode yes --dir /home/ec2-user/claude-lab/capstone/homefit/data/valkey --appendonly yes --save "" --daemonize no --loglevel warning
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

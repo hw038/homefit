@@ -1,0 +1,14 @@
+[Unit]
+Description=HomeFit Seoul web app (public via CloudFront, secret header)
+After=network.target homefit-valkey.service
+Wants=homefit-valkey.service
+
+[Service]
+User=ec2-user
+WorkingDirectory=/home/ec2-user/claude-lab/capstone/homefit
+ExecStart=/home/ec2-user/.local/share/uv/python/cpython-3.14.10-linux-aarch64-gnu/bin/python3.14 -I server.py --host 0.0.0.0 --port 8765
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

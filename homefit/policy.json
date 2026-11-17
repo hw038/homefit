@@ -1,0 +1,136 @@
+{
+  "asof": "2026-11-17",
+  "basis": "2025년 6·27 가계부채 대책, 9·7 공급대책, 10·15 주택시장 안정화 대책을 기준으로 계산해요. 이후 바뀐 내용이 있을 수 있으니 실제 대출 전에는 은행에 꼭 확인하세요.",
+  "region": "서울 25개 구 전체가 규제지역이고, 아파트는 토지거래허가구역이에요(2025.10.20~2026.12.31).",
+  "toheo_all_seoul": true,
+  "ltv": {
+    "none": 0.4,
+    "first": 0.7,
+    "one_cond": 0.4,
+    "multi": 0.0,
+    "multi3": 0.0
+  },
+  "housing_labels": {
+    "none": "무주택",
+    "first": "생애최초(무주택)",
+    "one_cond": "1주택(기존 주택 처분조건)",
+    "multi": "1주택 유지하며 추가 구입(취득 후 2주택)",
+    "multi3": "2주택 이상 보유(취득 후 3주택+)"
+  },
+  "loan_cap_by_price": [
+    {
+      "max_price": 150000,
+      "cap": 60000,
+      "label": "15억 이하"
+    },
+    {
+      "max_price": 250000,
+      "cap": 40000,
+      "label": "15억 초과~25억"
+    },
+    {
+      "max_price": null,
+      "cap": 20000,
+      "label": "25억 초과"
+    }
+  ],
+  "dsr_limit": 0.4,
+  "stress_rate_pp": 3.0,
+  "base_rate_pct": 4.5,
+  "term_years": 30,
+  "term_options": [
+    30
+  ],
+  "acq_tax_multi_rate": {
+    "multi": 0.08,
+    "multi3": 0.12
+  },
+  "brokerage": [
+    {
+      "max_price": 5000,
+      "rate": 0.006,
+      "cap": 25
+    },
+    {
+      "max_price": 20000,
+      "rate": 0.005,
+      "cap": 80
+    },
+    {
+      "max_price": 90000,
+      "rate": 0.004,
+      "cap": null
+    },
+    {
+      "max_price": 120000,
+      "rate": 0.005,
+      "cap": null
+    },
+    {
+      "max_price": 150000,
+      "rate": 0.006,
+      "cap": null
+    },
+    {
+      "max_price": null,
+      "rate": 0.007,
+      "cap": null
+    }
+  ],
+  "brokerage_vat": 0.1,
+  "other_costs": {
+    "stamp_10eok_below": 15,
+    "stamp_10eok_over": 35,
+    "bond_discount_rate": 0.002,
+    "legal_fee": 100
+  },
+  "profile": {
+    "securities_haircut": 0.9,
+    "pension_dc_irp_haircut": 0.85,
+    "emergency_months": 6,
+    "loan_assumptions": {
+      "주택담보": {
+        "method": "amortize",
+        "months": 300,
+        "label": "남은 25년 동안 매달 같은 금액을 갚는다고 계산"
+      },
+      "자동차": {
+        "method": "amortize",
+        "months": 36,
+        "label": "남은 3년 동안 매달 같은 금액을 갚는다고 계산"
+      },
+      "신용": {
+        "method": "credit5",
+        "label": "5년에 나눠 갚는다고 계산(은행 심사 방식)"
+      },
+      "전세자금": {
+        "method": "interest_only",
+        "label": "이자만 계산(원금은 보증금으로 갚는다고 봄)"
+      }
+    },
+    "jeonse_loan_ratio": 0.8
+  },
+  "weights": {
+    "live": {
+      "disc": 0.2,
+      "yoy": 0.1,
+      "vol": 0.05,
+      "liquidity": 0.15,
+      "age": 0.15,
+      "disp": 0.1,
+      "cancel": 0.1,
+      "direct": 0.05,
+      "budget_fit": 0.1
+    },
+    "invest": {
+      "disc": 0.15,
+      "yoy": 0.2,
+      "catch_up": 0.15,
+      "vol": 0.15,
+      "mom": 0.1,
+      "liquidity": 0.1,
+      "cancel": 0.1,
+      "direct": 0.05
+    }
+  }
+}
